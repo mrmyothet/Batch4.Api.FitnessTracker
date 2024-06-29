@@ -4,9 +4,9 @@ GO
 CREATE DATABASE [FitnessTracker]
  CONTAINMENT = NONE
  ON  PRIMARY 
-( NAME = N'FitnessTracker', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL11.MSSQLSERVER2012\MSSQL\DATA\FitnessTracker.mdf' , SIZE = 4096KB , MAXSIZE = UNLIMITED, FILEGROWTH = 1024KB )
+( NAME = N'FitnessTracker', FILENAME = N'C:\DB\FitnessTracker.mdf' , SIZE = 4096KB , MAXSIZE = UNLIMITED, FILEGROWTH = 1024KB )
  LOG ON 
-( NAME = N'FitnessTracker_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL11.MSSQLSERVER2012\MSSQL\DATA\FitnessTracker_log.ldf' , SIZE = 1024KB , MAXSIZE = 2048GB , FILEGROWTH = 10%)
+( NAME = N'FitnessTracker_log', FILENAME = N'C:\DB\FitnessTracker_log.ldf' , SIZE = 1024KB , MAXSIZE = 2048GB , FILEGROWTH = 10%)
 GO
 ALTER DATABASE [FitnessTracker] SET COMPATIBILITY_LEVEL = 110
 GO
