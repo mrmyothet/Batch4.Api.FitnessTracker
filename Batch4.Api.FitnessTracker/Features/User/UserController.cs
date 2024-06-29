@@ -29,5 +29,19 @@ namespace Batch4.Api.FitnessTracker.Features.User
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.ToString());
             }
         }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> LoginUser(LoginModel requestModel)
+        {
+            try
+            {
+                var response = await _bl_user.LoginAsync(requestModel);
+                return Ok(response);
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.ToString());
+            }
+        }
     }
 }
