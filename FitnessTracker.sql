@@ -1,6 +1,6 @@
 ﻿USE [master]
 GO
-/****** Object:  Database [FitnessTracker]    Script Date: 6/29/2024 4:47:22 PM ******/
+/****** Object:  Database [FitnessTracker]    Script Date: 6/29/2024 7:19:11 PM ******/
 CREATE DATABASE [FitnessTracker]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -73,7 +73,36 @@ ALTER DATABASE [FitnessTracker] SET TARGET_RECOVERY_TIME = 0 SECONDS
 GO
 USE [FitnessTracker]
 GO
-/****** Object:  Table [dbo].[Tbl_User]    Script Date: 6/29/2024 4:47:23 PM ******/
+/****** Object:  Table [dbo].[Tbl_Activity]    Script Date: 6/29/2024 7:19:11 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Tbl_Activity](
+	[Id] [int] NOT NULL,
+	[UserId] [int] NOT NULL,
+	[ActivityTypeId] [int] NOT NULL,
+	[Metric1] [decimal](18, 2) NULL,
+	[Metric2] [decimal](18, 2) NULL,
+	[Metric3] [decimal](18, 2) NULL,
+	[CaloriesBurned] [decimal](18, 2) NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Tbl_ActivityType]    Script Date: 6/29/2024 7:19:11 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Tbl_ActivityType](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](50) NOT NULL,
+ CONSTRAINT [PK_Tbl_ActivityType] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Tbl_User]    Script Date: 6/29/2024 7:19:11 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -82,12 +111,27 @@ CREATE TABLE [dbo].[Tbl_User](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[Name] [nvarchar](50) NOT NULL,
 	[Password] [nvarchar](50) NOT NULL,
+	[CalorieGoal] [int] NULL,
  CONSTRAINT [PK_Tbl_User] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
+SET IDENTITY_INSERT [dbo].[Tbl_ActivityType] ON 
+
+INSERT [dbo].[Tbl_ActivityType] ([Id], [Name]) VALUES (1, N'Walking')
+INSERT [dbo].[Tbl_ActivityType] ([Id], [Name]) VALUES (2, N'Swimming')
+INSERT [dbo].[Tbl_ActivityType] ([Id], [Name]) VALUES (3, N'Cycling')
+INSERT [dbo].[Tbl_ActivityType] ([Id], [Name]) VALUES (4, N'Running')
+INSERT [dbo].[Tbl_ActivityType] ([Id], [Name]) VALUES (5, N'Yoga')
+SET IDENTITY_INSERT [dbo].[Tbl_ActivityType] OFF
+SET IDENTITY_INSERT [dbo].[Tbl_User] ON 
+
+INSERT [dbo].[Tbl_User] ([Id], [Name], [Password], [CalorieGoal]) VALUES (1, N'myothet', N'Admin123123!', NULL)
+INSERT [dbo].[Tbl_User] ([Id], [Name], [Password], [CalorieGoal]) VALUES (2, N'susandarlin', N'Admin123123!', NULL)
+INSERT [dbo].[Tbl_User] ([Id], [Name], [Password], [CalorieGoal]) VALUES (3, N'hninwuttyi', N'Admin123123!', NULL)
+SET IDENTITY_INSERT [dbo].[Tbl_User] OFF
 USE [master]
 GO
 ALTER DATABASE [FitnessTracker] SET  READ_WRITE 
