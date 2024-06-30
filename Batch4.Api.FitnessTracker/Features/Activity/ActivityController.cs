@@ -35,4 +35,26 @@ public class ActivityController : ControllerBase
 
         return Ok(lst);
     }
+
+    [HttpPut("{activityId}")]
+    public async Task<IActionResult> UpdateActivityAsync(
+        int activityId,
+        ActivityRequestModel request
+    )
+    {
+        ActivityResponseModel response = await _bl_Activity.UpdateActivityAsync(
+            activityId,
+            request
+        );
+
+        if (!response.MessageResponse.IsSuccess)
+        {
+            if (response.MessageResponse.Message == "No data found.")
+                return NotFound(response.MessageResponse.Message);
+
+            return BadRequest(response.MessageResponse.Message);
+        }
+
+        return Ok(response);
+    }
 }

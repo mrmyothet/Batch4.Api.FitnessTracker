@@ -1,7 +1,9 @@
 ﻿using Batch4.Api.FitnessTracker.Db;
+using Batch4.Api.FitnessTracker.Features.ActivityType;
 using Batch4.FitnessTracker.Models.Db;
 using Batch4.FitnessTracker.Models.Models;
 using Batch4.FitnessTracker.Models.Models.Activity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Batch4.Api.FitnessTracker.Features.Activity
@@ -9,10 +11,12 @@ namespace Batch4.Api.FitnessTracker.Features.Activity
     public class DA_Activity
     {
         private readonly AppDbContext _context;
+        private readonly DA_ActivityType _DA_ActivityType;
 
-        public DA_Activity(AppDbContext context)
+        public DA_Activity(AppDbContext context, DA_ActivityType dA_ActivityType)
         {
             _context = context;
+            _DA_ActivityType = dA_ActivityType;
         }
 
         public async Task<ActivityResponseModel> CreateActivityAsync(
@@ -24,6 +28,8 @@ namespace Batch4.Api.FitnessTracker.Features.Activity
 
             try
             {
+                activity.CaloriesBurned = await CalculateCaloriesBurnedAsync(requestActivity);
+
                 var createdActivity = _context.Activities.Add(activity);
                 int result = await _context.SaveChangesAsync();
 
@@ -61,6 +67,56 @@ namespace Batch4.Api.FitnessTracker.Features.Activity
         {
             var lst = _context.Activities.Where<Tbl_Activity>(a => a.UserId == userId).ToList();
             return lst;
+        }
+
+        public async Task<Tbl_Activity> UpdateActivityAsync(
+            int activityId,
+            ActivityRequestModel request
+        )
+        {
+            var item = await _context.Activities.FirstOrDefaultAsync(x =>
+                x.ActivityId == activityId
+            );
+
+            if (item is null)
+                return item;
+
+            item.ActivityTypeId = request.ActivityTypeId;
+            item.Metric1 = request.Metric1;
+            item.Metric2 = request.Metric2;
+            item.Metric3 = request.Metric3;
+            item.CaloriesBurned = await CalculateCaloriesBurnedAsync(request);
+
+            await _context.SaveChangesAsync();
+
+            return item;
+        }
+
+        public async Task<decimal> CalculateCaloriesBurnedAsync(ActivityRequestModel request)
+        {
+            decimal totalCaloriesBurned = 0;
+
+            int activityTypeId = request.ActivityTypeId;
+            var tblActivityType = await _DA_ActivityType.GetActivityTypeByIdAsyn(activityTypeId);
+            if (tblActivityType.ActivityTypeId == -1)
+                totalCaloriesBurned = -1;
+
+            switch (tblActivityType.ActivityTypeName)
+            {
+                case "Walking":
+                    totalCaloriesBurned = request.Metric1 * (decimal)0.035;
+                    break;
+
+                case "Swimming":
+                    totalCaloriesBurned = request.Metric2 * 8;
+                    break;
+
+                default:
+                    totalCaloriesBurned = -1;
+                    break;
+            }
+
+            return totalCaloriesBurned;
         }
     }
 }

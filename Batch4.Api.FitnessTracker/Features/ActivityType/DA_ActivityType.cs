@@ -1,5 +1,6 @@
 ﻿using Batch4.Api.FitnessTracker.Db;
 using Batch4.FitnessTracker.Models.Db;
+using Microsoft.EntityFrameworkCore;
 
 namespace Batch4.Api.FitnessTracker.Features.ActivityType;
 
@@ -16,6 +17,18 @@ public class DA_ActivityType
     {
         var lst = _context.ActivityTypes.ToList();
         return lst;
+    }
+
+    public async Task<Tbl_ActivityType> GetActivityTypeByIdAsyn(int activityTypeId)
+    {
+        var item = await _context.ActivityTypes.FirstOrDefaultAsync(x =>
+            x.ActivityTypeId == activityTypeId
+        );
+
+        if (item is null)
+            return new Tbl_ActivityType() { ActivityTypeId = -1 };
+
+        return item;
     }
 
     public Tbl_ActivityType CreateActivityType(string activityTypeName)
