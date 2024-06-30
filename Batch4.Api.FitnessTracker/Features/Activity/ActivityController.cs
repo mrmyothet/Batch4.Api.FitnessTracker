@@ -25,4 +25,14 @@ public class ActivityController : ControllerBase
 
         return Ok(response);
     }
+
+    [HttpGet("{userId}")]
+    public IActionResult GetActivitiesByUserId(int userId)
+    {
+        var lst = _bl_Activity.GetActivitiesByUserId(userId);
+        if (lst.Count == 0)
+            return NotFound("No activity found.");
+
+        return Ok(lst);
+    }
 }

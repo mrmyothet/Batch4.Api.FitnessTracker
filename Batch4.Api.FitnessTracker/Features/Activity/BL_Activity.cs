@@ -1,4 +1,5 @@
-﻿using Batch4.FitnessTracker.Models.Models.Activity;
+﻿using Batch4.FitnessTracker.Models.Db;
+using Batch4.FitnessTracker.Models.Models.Activity;
 
 namespace Batch4.Api.FitnessTracker.Features.Activity
 {
@@ -16,6 +17,11 @@ namespace Batch4.Api.FitnessTracker.Features.Activity
             ActivityResponseModel response = await _DA_Activity.CreateActivityAsync(activity);
 
             return response;
+        }
+
+        public List<Tbl_Activity> GetActivitiesByUserId(int userId)
+        {
+            return _DA_Activity.GetActivitiesByUserId(userId);
         }
     }
 }

@@ -56,5 +56,11 @@ namespace Batch4.Api.FitnessTracker.Features.Activity
 
             return response;
         }
+
+        public List<Tbl_Activity> GetActivitiesByUserId(int userId)
+        {
+            var lst = _context.Activities.Where<Tbl_Activity>(a => a.UserId == userId).ToList();
+            return lst;
+        }
     }
 }

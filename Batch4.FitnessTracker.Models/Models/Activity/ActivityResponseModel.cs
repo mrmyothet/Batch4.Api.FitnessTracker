@@ -11,10 +11,10 @@ public class ActivityResponseModel
     public int ActivityId { get; set; }
     public int UserId { get; set; }
     public int ActivityTypeId { get; set; }
-    public double Metric1 { get; set; }
-    public double Metric2 { get; set; }
-    public double Metric3 { get; set; }
-    public double CaloriesBurned { get; set; }
+    public decimal Metric1 { get; set; }
+    public decimal Metric2 { get; set; }
+    public decimal Metric3 { get; set; }
+    public decimal CaloriesBurned { get; set; }
     public MessageResponseModel MessageResponse { get; set; }
 
     public ActivityResponseModel()
