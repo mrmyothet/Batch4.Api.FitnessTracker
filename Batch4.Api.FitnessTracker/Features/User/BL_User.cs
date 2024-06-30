@@ -8,7 +8,6 @@ namespace Batch4.Api.FitnessTracker.Features.User
     public class BL_User
     {
         private readonly DA_User _da_user;
-        private UserData? _currentUser = new();
 
         public BL_User(DA_User da_user)
         {
@@ -23,16 +22,16 @@ namespace Batch4.Api.FitnessTracker.Features.User
             return response;
         }
 
-        public async Task<MessageResponseModel> LoginAsync(LoginModel loginModel)
+        public async Task<LoginResponseModel> LoginAsync(LoginModel loginModel)
         {
-
-            if(_currentUser is not null || _currentUser!.CheckLoginAttemps() )
-            {
-                return new MessageResponseModel(false, "Maximum login attempts reached. Please try again later.");
-            }
+            LoginResponseModel response = new LoginResponseModel();
             var checkLoginResponse = checkLoginNullValue(loginModel);
-            if(checkLoginResponse is not null) return checkLoginResponse;
-            var response=await _da_user.LoginAsync(loginModel.Change());
+            if(checkLoginResponse is not null)
+            {
+                response.messageResponse = checkLoginResponse;
+                return response;
+            }
+            response=await _da_user.LoginAsync(loginModel.Change());
             return response;
         }
 

@@ -36,6 +36,10 @@ namespace Batch4.Api.FitnessTracker.Features.User
             try
             {
                 var response = await _bl_user.LoginAsync(requestModel);
+                if (response.messageResponse!.IsError)
+                {
+                    return BadRequest(response);
+                }
                 return Ok(response);
             }
             catch(Exception ex)

@@ -9,7 +9,6 @@ namespace Batch4.Api.FitnessTracker.Features.User
     public class DA_User
     {
         private readonly AppDbContext _context;
-        private UserData? _currentUser;
         
         public DA_User(AppDbContext context)
         {
@@ -33,9 +32,9 @@ namespace Batch4.Api.FitnessTracker.Features.User
             return response;
         } 
 
-        public async Task<MessageResponseModel> LoginAsync(Tbl_User tbl_User)
+        public async Task<LoginResponseModel> LoginAsync(Tbl_User tbl_User)
         {
-            MessageResponseModel response = new MessageResponseModel();
+            LoginResponseModel response = new LoginResponseModel();
             try
             {
                 var item = await _context.tblUser
@@ -44,19 +43,17 @@ namespace Batch4.Api.FitnessTracker.Features.User
                                                       x.Password == tbl_User.Password);
                 if(item is null)
                 {
-                    response= new MessageResponseModel(false, "User not found");
-                    _currentUser!.IncreaserLoginAttemps();
-                    goto result;
+                    response.messageResponse = new MessageResponseModel(false, "User not found");
+                    return response;
                 }
-                _currentUser = new UserData(item.UserName!, item.Password!);
-                _currentUser.RestLoginAttemps();
-                response = new MessageResponseModel(true, "Successfully Login");
+                response.UserId = item.UserId;
+                response.UserName = item.UserName;
+                response.messageResponse = new MessageResponseModel(true, "Successfully Login");
             }   
             catch (Exception ex)
             {
-                response = new MessageResponseModel(false, ex);
+                response.messageResponse = new MessageResponseModel(false, ex);
             }
-            result:
             return response;
         }
     }
