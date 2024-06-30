@@ -11,5 +11,7 @@ namespace Batch4.Api.FitnessTracker.Db
         public DbSet<Tbl_User> tblUser { get; set; }
 
         public DbSet<Tbl_Activity> Activities { get; set; }
+
+        public DbSet<Tbl_ActivityType> ActivityTypes { get; set; }
     }
 }

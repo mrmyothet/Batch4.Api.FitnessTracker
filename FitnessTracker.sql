@@ -1,6 +1,6 @@
 ﻿USE [master]
 GO
-/****** Object:  Database [FitnessTracker]    Script Date: 2024-06-30 12:59:27 pm ******/
+/****** Object:  Database [FitnessTracker]    Script Date: 6/30/2024 1:54:42 PM ******/
 CREATE DATABASE [FitnessTracker]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -73,7 +73,7 @@ ALTER DATABASE [FitnessTracker] SET TARGET_RECOVERY_TIME = 0 SECONDS
 GO
 USE [FitnessTracker]
 GO
-/****** Object:  Table [dbo].[Tbl_Activity]    Script Date: 2024-06-30 12:59:28 pm ******/
+/****** Object:  Table [dbo].[Tbl_Activity]    Script Date: 6/30/2024 1:54:43 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -92,21 +92,21 @@ CREATE TABLE [dbo].[Tbl_Activity](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Tbl_ActivityType]    Script Date: 2024-06-30 12:59:28 pm ******/
+/****** Object:  Table [dbo].[Tbl_ActivityType]    Script Date: 6/30/2024 1:54:43 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Tbl_ActivityType](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Name] [nvarchar](50) NOT NULL,
+	[ActivityTypeId] [int] IDENTITY(1,1) NOT NULL,
+	[ActivityTypeName] [nvarchar](50) NOT NULL,
  CONSTRAINT [PK_Tbl_ActivityType] PRIMARY KEY CLUSTERED 
 (
-	[Id] ASC
+	[ActivityTypeId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Tbl_User]    Script Date: 2024-06-30 12:59:28 pm ******/
+/****** Object:  Table [dbo].[Tbl_User]    Script Date: 6/30/2024 1:54:43 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -132,11 +132,11 @@ INSERT [dbo].[Tbl_Activity] ([ActivityId], [UserId], [ActivityTypeId], [Metric1]
 SET IDENTITY_INSERT [dbo].[Tbl_Activity] OFF
 SET IDENTITY_INSERT [dbo].[Tbl_ActivityType] ON 
 
-INSERT [dbo].[Tbl_ActivityType] ([Id], [Name]) VALUES (1, N'Walking')
-INSERT [dbo].[Tbl_ActivityType] ([Id], [Name]) VALUES (2, N'Swimming')
-INSERT [dbo].[Tbl_ActivityType] ([Id], [Name]) VALUES (3, N'Cycling')
-INSERT [dbo].[Tbl_ActivityType] ([Id], [Name]) VALUES (4, N'Running')
-INSERT [dbo].[Tbl_ActivityType] ([Id], [Name]) VALUES (5, N'Yoga')
+INSERT [dbo].[Tbl_ActivityType] ([ActivityTypeId], [ActivityTypeName]) VALUES (1, N'Walking')
+INSERT [dbo].[Tbl_ActivityType] ([ActivityTypeId], [ActivityTypeName]) VALUES (2, N'Swimming')
+INSERT [dbo].[Tbl_ActivityType] ([ActivityTypeId], [ActivityTypeName]) VALUES (3, N'Cycling')
+INSERT [dbo].[Tbl_ActivityType] ([ActivityTypeId], [ActivityTypeName]) VALUES (4, N'Running')
+INSERT [dbo].[Tbl_ActivityType] ([ActivityTypeId], [ActivityTypeName]) VALUES (5, N'Yoga')
 SET IDENTITY_INSERT [dbo].[Tbl_ActivityType] OFF
 SET IDENTITY_INSERT [dbo].[Tbl_User] ON 
 

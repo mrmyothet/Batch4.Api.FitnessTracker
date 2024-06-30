@@ -1,5 +1,6 @@
 ﻿using Batch4.Api.FitnessTracker.Db;
 using Batch4.Api.FitnessTracker.Features.Activity;
+using Batch4.Api.FitnessTracker.Features.ActivityType;
 using Batch4.Api.FitnessTracker.Features.User;
 using Microsoft.EntityFrameworkCore;
 
@@ -38,6 +39,7 @@ namespace Batch4.Api.FitnessTracker.Services
         {
             service.AddScoped<DA_User>();
             service.AddScoped<DA_Activity>();
+            service.AddScoped<DA_ActivityType>();
             return service;
         }
 
@@ -45,6 +47,7 @@ namespace Batch4.Api.FitnessTracker.Services
         {
             service.AddScoped<BL_User>();
             service.AddScoped<BL_Activity>();
+            service.AddScoped<BL_ActivityType>();
             return service;
         }
     }
