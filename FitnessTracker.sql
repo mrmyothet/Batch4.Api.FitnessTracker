@@ -1,6 +1,6 @@
 ﻿USE [master]
 GO
-/****** Object:  Database [FitnessTracker]    Script Date: 2024-06-29 11:10:01 pm ******/
+/****** Object:  Database [FitnessTracker]    Script Date: 2024-06-30 12:59:27 pm ******/
 CREATE DATABASE [FitnessTracker]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -73,22 +73,26 @@ ALTER DATABASE [FitnessTracker] SET TARGET_RECOVERY_TIME = 0 SECONDS
 GO
 USE [FitnessTracker]
 GO
-/****** Object:  Table [dbo].[Tbl_Activity]    Script Date: 2024-06-29 11:10:01 pm ******/
+/****** Object:  Table [dbo].[Tbl_Activity]    Script Date: 2024-06-30 12:59:28 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Tbl_Activity](
-	[Id] [int] NOT NULL,
+	[ActivityId] [int] IDENTITY(1,1) NOT NULL,
 	[UserId] [int] NOT NULL,
 	[ActivityTypeId] [int] NOT NULL,
 	[Metric1] [decimal](18, 2) NULL,
 	[Metric2] [decimal](18, 2) NULL,
 	[Metric3] [decimal](18, 2) NULL,
-	[CaloriesBurned] [decimal](18, 2) NULL
+	[CaloriesBurned] [decimal](18, 2) NULL,
+ CONSTRAINT [PK_Tbl_Activity] PRIMARY KEY CLUSTERED 
+(
+	[ActivityId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Tbl_ActivityType]    Script Date: 2024-06-29 11:10:01 pm ******/
+/****** Object:  Table [dbo].[Tbl_ActivityType]    Script Date: 2024-06-30 12:59:28 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -102,7 +106,7 @@ CREATE TABLE [dbo].[Tbl_ActivityType](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Tbl_User]    Script Date: 2024-06-29 11:10:01 pm ******/
+/****** Object:  Table [dbo].[Tbl_User]    Script Date: 2024-06-30 12:59:28 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -118,6 +122,14 @@ CREATE TABLE [dbo].[Tbl_User](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
+SET IDENTITY_INSERT [dbo].[Tbl_Activity] ON 
+
+INSERT [dbo].[Tbl_Activity] ([ActivityId], [UserId], [ActivityTypeId], [Metric1], [Metric2], [Metric3], [CaloriesBurned]) VALUES (1, 1, 1, CAST(500.00 AS Decimal(18, 2)), CAST(60.00 AS Decimal(18, 2)), CAST(0.50 AS Decimal(18, 2)), CAST(0.00 AS Decimal(18, 2)))
+INSERT [dbo].[Tbl_Activity] ([ActivityId], [UserId], [ActivityTypeId], [Metric1], [Metric2], [Metric3], [CaloriesBurned]) VALUES (2, 1, 1, CAST(500.00 AS Decimal(18, 2)), CAST(60.00 AS Decimal(18, 2)), CAST(0.50 AS Decimal(18, 2)), CAST(0.00 AS Decimal(18, 2)))
+INSERT [dbo].[Tbl_Activity] ([ActivityId], [UserId], [ActivityTypeId], [Metric1], [Metric2], [Metric3], [CaloriesBurned]) VALUES (3, 1, 1, CAST(500.00 AS Decimal(18, 2)), CAST(60.00 AS Decimal(18, 2)), CAST(0.50 AS Decimal(18, 2)), CAST(0.00 AS Decimal(18, 2)))
+INSERT [dbo].[Tbl_Activity] ([ActivityId], [UserId], [ActivityTypeId], [Metric1], [Metric2], [Metric3], [CaloriesBurned]) VALUES (4, 1, 1, CAST(500.00 AS Decimal(18, 2)), CAST(60.00 AS Decimal(18, 2)), CAST(0.50 AS Decimal(18, 2)), CAST(0.00 AS Decimal(18, 2)))
+INSERT [dbo].[Tbl_Activity] ([ActivityId], [UserId], [ActivityTypeId], [Metric1], [Metric2], [Metric3], [CaloriesBurned]) VALUES (5, 1, 1, CAST(500.00 AS Decimal(18, 2)), CAST(60.00 AS Decimal(18, 2)), CAST(0.50 AS Decimal(18, 2)), CAST(0.00 AS Decimal(18, 2)))
+SET IDENTITY_INSERT [dbo].[Tbl_Activity] OFF
 SET IDENTITY_INSERT [dbo].[Tbl_ActivityType] ON 
 
 INSERT [dbo].[Tbl_ActivityType] ([Id], [Name]) VALUES (1, N'Walking')
