@@ -118,5 +118,18 @@ namespace Batch4.Api.FitnessTracker.Features.Activity
 
             return totalCaloriesBurned;
         }
+
+        public async Task<int> DeleteActivityAsync(int activityId)
+        {
+            var item = await _context.Activities.FirstOrDefaultAsync(x =>
+                x.ActivityId == activityId
+            );
+            if (item is null)
+                return 0;
+
+            _context.Activities.Remove(item);
+            var result = _context.SaveChanges();
+            return result;
+        }
     }
 }

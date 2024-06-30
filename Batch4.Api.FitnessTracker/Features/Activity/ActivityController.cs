@@ -57,4 +57,19 @@ public class ActivityController : ControllerBase
 
         return Ok(response);
     }
+
+    [HttpDelete("{activityId}")]
+    public async Task<IActionResult> DeleteActivityAsync(int activityId)
+    {
+        ActivityResponseModel response = await _bl_Activity.DeleteActivity(activityId);
+        if (!response.MessageResponse.IsSuccess)
+        {
+            if (response.MessageResponse.Message == "No data found.")
+                return NotFound(response.MessageResponse.Message);
+
+            return BadRequest(response.MessageResponse.Message);
+        }
+
+        return Ok(response);
+    }
 }

@@ -66,5 +66,27 @@ namespace Batch4.Api.FitnessTracker.Features.Activity
 
             return response;
         }
+
+        public async Task<ActivityResponseModel> DeleteActivity(int activityId)
+        {
+            ActivityResponseModel response = new ActivityResponseModel();
+            try
+            {
+                var result = await _DA_Activity.DeleteActivityAsync(activityId);
+                if (result == 0)
+                {
+                    response.MessageResponse.IsSuccess = false;
+                    response.MessageResponse.Message = "No data found.";
+                    return response;
+                }
+                response.MessageResponse.IsSuccess = true;
+                response.MessageResponse.Message = "Deleting activity is successful.";
+            }
+            catch (Exception ex)
+            {
+                response.MessageResponse = new MessageResponseModel(false, ex);
+            }
+            return response;
+        }
     }
 }
