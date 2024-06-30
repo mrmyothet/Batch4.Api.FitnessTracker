@@ -16,4 +16,9 @@ public class ActivityResponseModel
     public double Metric3 { get; set; }
     public double CaloriesBurned { get; set; }
     public MessageResponseModel MessageResponse { get; set; }
+
+    public ActivityResponseModel()
+    {
+        MessageResponse = new MessageResponseModel();
+    }
 }

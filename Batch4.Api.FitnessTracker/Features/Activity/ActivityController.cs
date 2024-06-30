@@ -8,16 +8,21 @@ namespace Batch4.Api.FitnessTracker.Features.Activity;
 [ApiController]
 public class ActivityController : ControllerBase
 {
-    private readonly BL_Activity _BL_Activity;
+    private readonly BL_Activity _bl_Activity;
 
     public ActivityController(BL_Activity bl_Activity)
     {
-        _BL_Activity = bl_Activity;
+        _bl_Activity = bl_Activity;
     }
 
     [HttpPost]
-    public IActionResult CreateActivity(ActivityRequestModel request)
+    public async Task<IActionResult> CreateActivityAsync(ActivityRequestModel request)
     {
-        return Ok();
+        ActivityResponseModel response = await _bl_Activity.CreateActivityAsync(request);
+
+        if (!response.MessageResponse.IsSuccess)
+            return BadRequest(response.MessageResponse.Message);
+
+        return Ok(response);
     }
 }
