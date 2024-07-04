@@ -1,4 +1,5 @@
-﻿using Batch4.FitnessTracker.Models.Models;
+﻿using System.Net;
+using Batch4.FitnessTracker.Models.Models;
 using Batch4.FitnessTracker.Models.Models.User;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -24,7 +25,7 @@ namespace Batch4.Api.FitnessTracker.Features.User
                 var response = await _bl_user.RegisterAsync(requestModel);
                 return Ok(response);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.ToString());
             }
@@ -42,7 +43,25 @@ namespace Batch4.Api.FitnessTracker.Features.User
                 }
                 return Ok(response);
             }
-            catch(Exception ex)
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.ToString());
+            }
+        }
+
+        [HttpPost("setcaloriegoal")]
+        public async Task<IActionResult> SetCalorieGoal(CalorieGoalModel model)
+        {
+            try
+            {
+                var response = await _bl_user.SetCalorieGoal(model);
+
+                if (!response.messageResponse.IsSuccess)
+                    return BadRequest(response);
+
+                return Ok(response);
+            }
+            catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.ToString());
             }

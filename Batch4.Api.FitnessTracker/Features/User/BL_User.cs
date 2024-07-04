@@ -17,7 +17,8 @@ namespace Batch4.Api.FitnessTracker.Features.User
         public async Task<MessageResponseModel> RegisterAsync(RegisterModel requestModel)
         {
             var checkRegisterResponse = checkRegisterNullValue(requestModel);
-            if (checkRegisterResponse is not null) return checkRegisterResponse;
+            if (checkRegisterResponse is not null)
+                return checkRegisterResponse;
             var response = await _da_user.RegisterAsync(requestModel.Change());
             return response;
         }
@@ -26,12 +27,12 @@ namespace Batch4.Api.FitnessTracker.Features.User
         {
             LoginResponseModel response = new LoginResponseModel();
             var checkLoginResponse = checkLoginNullValue(loginModel);
-            if(checkLoginResponse is not null)
+            if (checkLoginResponse is not null)
             {
                 response.messageResponse = checkLoginResponse;
                 return response;
             }
-            response=await _da_user.LoginAsync(loginModel.Change());
+            response = await _da_user.LoginAsync(loginModel.Change());
             return response;
         }
 
@@ -45,13 +46,19 @@ namespace Batch4.Api.FitnessTracker.Features.User
             {
                 return new MessageResponseModel(false, "User name is null");
             }
-            if (string.IsNullOrWhiteSpace(registerModel.Password) || registerModel.Password.Length < 8)
+            if (
+                string.IsNullOrWhiteSpace(registerModel.Password)
+                || registerModel.Password.Length < 8
+            )
             {
                 return new MessageResponseModel(false, "Password must be 8 character long");
             }
             if (registerModel.Password != registerModel.ConfirmPassword)
             {
-                return new MessageResponseModel(false, "Password and ConfirmPassword Should be same");
+                return new MessageResponseModel(
+                    false,
+                    "Password and ConfirmPassword Should be same"
+                );
             }
             return null;
         }
@@ -71,6 +78,12 @@ namespace Batch4.Api.FitnessTracker.Features.User
                 return new MessageResponseModel(false, "Please type Password");
             }
             return null;
+        }
+
+        public async Task<CalorieGoalResponseModel> SetCalorieGoal(CalorieGoalModel model)
+        {
+            var response = await _da_user.SetCalorieGoal(model);
+            return response;
         }
     }
 }

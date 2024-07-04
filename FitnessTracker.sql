@@ -1,6 +1,6 @@
 ﻿USE [master]
 GO
-/****** Object:  Database [FitnessTracker]    Script Date: 6/30/2024 1:54:42 PM ******/
+/****** Object:  Database [FitnessTracker]    Script Date: 2024-07-04 11:53:33 pm ******/
 CREATE DATABASE [FitnessTracker]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -73,7 +73,7 @@ ALTER DATABASE [FitnessTracker] SET TARGET_RECOVERY_TIME = 0 SECONDS
 GO
 USE [FitnessTracker]
 GO
-/****** Object:  Table [dbo].[Tbl_Activity]    Script Date: 6/30/2024 1:54:43 PM ******/
+/****** Object:  Table [dbo].[Tbl_Activity]    Script Date: 2024-07-04 11:53:33 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -92,7 +92,7 @@ CREATE TABLE [dbo].[Tbl_Activity](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Tbl_ActivityType]    Script Date: 6/30/2024 1:54:43 PM ******/
+/****** Object:  Table [dbo].[Tbl_ActivityType]    Script Date: 2024-07-04 11:53:33 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -106,7 +106,7 @@ CREATE TABLE [dbo].[Tbl_ActivityType](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Tbl_User]    Script Date: 6/30/2024 1:54:43 PM ******/
+/****** Object:  Table [dbo].[Tbl_User]    Script Date: 2024-07-04 11:53:33 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -116,20 +116,13 @@ CREATE TABLE [dbo].[Tbl_User](
 	[UserName] [nvarchar](50) NOT NULL,
 	[Password] [nvarchar](50) NOT NULL,
 	[CalorieGoal] [int] NULL,
+	[TotalCaloriesBurned] [decimal](18, 2) NULL,
  CONSTRAINT [PK_Tbl_User] PRIMARY KEY CLUSTERED 
 (
 	[UserId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-SET IDENTITY_INSERT [dbo].[Tbl_Activity] ON 
-
-INSERT [dbo].[Tbl_Activity] ([ActivityId], [UserId], [ActivityTypeId], [Metric1], [Metric2], [Metric3], [CaloriesBurned]) VALUES (1, 1, 1, CAST(500.00 AS Decimal(18, 2)), CAST(60.00 AS Decimal(18, 2)), CAST(0.50 AS Decimal(18, 2)), CAST(0.00 AS Decimal(18, 2)))
-INSERT [dbo].[Tbl_Activity] ([ActivityId], [UserId], [ActivityTypeId], [Metric1], [Metric2], [Metric3], [CaloriesBurned]) VALUES (2, 1, 1, CAST(500.00 AS Decimal(18, 2)), CAST(60.00 AS Decimal(18, 2)), CAST(0.50 AS Decimal(18, 2)), CAST(0.00 AS Decimal(18, 2)))
-INSERT [dbo].[Tbl_Activity] ([ActivityId], [UserId], [ActivityTypeId], [Metric1], [Metric2], [Metric3], [CaloriesBurned]) VALUES (3, 1, 1, CAST(500.00 AS Decimal(18, 2)), CAST(60.00 AS Decimal(18, 2)), CAST(0.50 AS Decimal(18, 2)), CAST(0.00 AS Decimal(18, 2)))
-INSERT [dbo].[Tbl_Activity] ([ActivityId], [UserId], [ActivityTypeId], [Metric1], [Metric2], [Metric3], [CaloriesBurned]) VALUES (4, 1, 1, CAST(500.00 AS Decimal(18, 2)), CAST(60.00 AS Decimal(18, 2)), CAST(0.50 AS Decimal(18, 2)), CAST(0.00 AS Decimal(18, 2)))
-INSERT [dbo].[Tbl_Activity] ([ActivityId], [UserId], [ActivityTypeId], [Metric1], [Metric2], [Metric3], [CaloriesBurned]) VALUES (5, 1, 1, CAST(500.00 AS Decimal(18, 2)), CAST(60.00 AS Decimal(18, 2)), CAST(0.50 AS Decimal(18, 2)), CAST(0.00 AS Decimal(18, 2)))
-SET IDENTITY_INSERT [dbo].[Tbl_Activity] OFF
 SET IDENTITY_INSERT [dbo].[Tbl_ActivityType] ON 
 
 INSERT [dbo].[Tbl_ActivityType] ([ActivityTypeId], [ActivityTypeName]) VALUES (1, N'Walking')
@@ -140,11 +133,13 @@ INSERT [dbo].[Tbl_ActivityType] ([ActivityTypeId], [ActivityTypeName]) VALUES (5
 SET IDENTITY_INSERT [dbo].[Tbl_ActivityType] OFF
 SET IDENTITY_INSERT [dbo].[Tbl_User] ON 
 
-INSERT [dbo].[Tbl_User] ([UserId], [UserName], [Password], [CalorieGoal]) VALUES (1, N'myothet', N'Admin123123!', NULL)
-INSERT [dbo].[Tbl_User] ([UserId], [UserName], [Password], [CalorieGoal]) VALUES (2, N'susandarlin', N'Admin123123!', NULL)
-INSERT [dbo].[Tbl_User] ([UserId], [UserName], [Password], [CalorieGoal]) VALUES (3, N'hninwuttyi', N'Admin123123!', NULL)
-INSERT [dbo].[Tbl_User] ([UserId], [UserName], [Password], [CalorieGoal]) VALUES (4, N'myothet', N'Admin123123!', NULL)
+INSERT [dbo].[Tbl_User] ([UserId], [UserName], [Password], [CalorieGoal], [TotalCaloriesBurned]) VALUES (1, N'myothet', N'Admin123123!', 600, CAST(0.00 AS Decimal(18, 2)))
+INSERT [dbo].[Tbl_User] ([UserId], [UserName], [Password], [CalorieGoal], [TotalCaloriesBurned]) VALUES (2, N'susandarlin', N'Admin123123!', 700, CAST(0.00 AS Decimal(18, 2)))
+INSERT [dbo].[Tbl_User] ([UserId], [UserName], [Password], [CalorieGoal], [TotalCaloriesBurned]) VALUES (3, N'hninwuttyi', N'Admin123123!', 0, CAST(0.00 AS Decimal(18, 2)))
+INSERT [dbo].[Tbl_User] ([UserId], [UserName], [Password], [CalorieGoal], [TotalCaloriesBurned]) VALUES (4, N'myothet', N'Admin123123!', 0, CAST(0.00 AS Decimal(18, 2)))
 SET IDENTITY_INSERT [dbo].[Tbl_User] OFF
+ALTER TABLE [dbo].[Tbl_User] ADD  CONSTRAINT [DF_Tbl_User_CalorieGoal]  DEFAULT ((0)) FOR [CalorieGoal]
+GO
 USE [master]
 GO
 ALTER DATABASE [FitnessTracker] SET  READ_WRITE 
