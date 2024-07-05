@@ -10,7 +10,8 @@ namespace Batch4.FitnessTracker.Models.Models.Activity
     public class ActivityDetailModel
     {
         public UserResponseModel? userResponse { get; set; }
-        public ActivityDetail? activityDetail { get; set; }
+        public List<ActivityDetail>? activityDetail { get; set; }
+        public MessageResponseModel? messageResponse { get; set; }
     }
 
     public class ActivityDetail

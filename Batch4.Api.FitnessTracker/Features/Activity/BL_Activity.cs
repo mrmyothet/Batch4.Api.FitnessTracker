@@ -23,9 +23,10 @@ namespace Batch4.Api.FitnessTracker.Features.Activity
             return response;
         }
 
-        public List<Tbl_Activity> GetActivitiesByUserId(int userId)
+        public  ActivityDetailModel GetActivitiesByUserId(int userId)
         {
-            return _DA_Activity.GetActivitiesByUserId(userId);
+            var response= _DA_Activity.GetActivitiesByUserId(userId);
+            return response; 
         }
 
         public async Task<ActivityResponseModel> UpdateActivityAsync(

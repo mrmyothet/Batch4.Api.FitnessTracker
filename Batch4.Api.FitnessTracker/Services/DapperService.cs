@@ -20,5 +20,12 @@ namespace Batch4.Api.FitnessTracker.Services
             var lst=db.Query<T>(query,parms).ToList();
             return lst;
         }
+
+        public T QueryFirstOrDefault<T>(string query,object? parms = null)
+        {
+            using IDbConnection db=new SqlConnection(_connectionString);
+            var item = db.Query<T>(query,parms).FirstOrDefault();
+            return item;
+        }
     }
 }

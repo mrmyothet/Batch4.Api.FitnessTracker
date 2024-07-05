@@ -27,13 +27,21 @@ public class ActivityController : ControllerBase
     }
 
     [HttpGet("{userId}")]
-    public IActionResult GetActivitiesByUserId(int userId)
+    public IActionResult GetActivityByUserId(int userId)
     {
-        var lst = _bl_Activity.GetActivitiesByUserId(userId);
-        if (lst.Count == 0)
-            return NotFound("No activity found.");
-
-        return Ok(lst);
+        try
+        {
+            var response = _bl_Activity.GetActivitiesByUserId(userId);
+            if (response is null || response.messageResponse!.IsError)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
+        }
+        catch(Exception ex)
+        {
+            return StatusCode(500, ex.ToString());
+        }
     }
 
     [HttpPut("{activityId}")]

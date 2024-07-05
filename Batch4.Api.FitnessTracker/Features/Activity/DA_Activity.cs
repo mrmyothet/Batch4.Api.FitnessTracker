@@ -1,8 +1,10 @@
 ﻿using Batch4.Api.FitnessTracker.Db;
 using Batch4.Api.FitnessTracker.Features.ActivityType;
+using Batch4.Api.FitnessTracker.Services;
 using Batch4.FitnessTracker.Models.Db;
 using Batch4.FitnessTracker.Models.Models;
 using Batch4.FitnessTracker.Models.Models.Activity;
+using Batch4.FitnessTracker.Models.Models.User;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
@@ -12,10 +14,12 @@ namespace Batch4.Api.FitnessTracker.Features.Activity
     {
         private readonly AppDbContext _context;
         private readonly DA_ActivityType _DA_ActivityType;
+        private readonly DapperService _dapperServiec;
 
-        public DA_Activity(AppDbContext context, DA_ActivityType dA_ActivityType)
+        public DA_Activity(AppDbContext context, DA_ActivityType dA_ActivityType,DapperService dapperService)
         {
             _context = context;
+            _dapperServiec= dapperService;
             _DA_ActivityType = dA_ActivityType;
         }
 
@@ -63,10 +67,31 @@ namespace Batch4.Api.FitnessTracker.Features.Activity
             return response;
         }
 
-        public List<Tbl_Activity> GetActivitiesByUserId(int userId)
+        public ActivityDetailModel GetActivitiesByUserId(int userId)
         {
-            var lst = _context.Activities.Where<Tbl_Activity>(a => a.UserId == userId).ToList();
-            return lst;
+            string userQuery = @"select [UserId],[UserName],[CalorieGoal],[TotalCaloriesBurned] from Tbl_User where UserId=@UserId";
+            string query = @"select a.[ActivityId],a.[UserId],u.[UserName],a.[ActivityTypeId],att.[ActivityTypeName],
+a.[Metric1],a.[Metric2],a.[Metric3],a.[CaloriesBurned] from Tbl_Activity a
+inner join Tbl_ActivityType att on a.ActivityTypeId=att.ActivityTypeId
+inner join Tbl_User u on a.UserId=u.UserId where a.UserId=@UserId";
+            ActivityDetailModel response = new ActivityDetailModel();
+            try
+            {
+                var item=_dapperServiec.QueryFirstOrDefault<UserResponseModel>(userQuery,new {UserId=userId}); 
+                if(item is null)
+                {
+                    response.messageResponse = new MessageResponseModel(false, "UserNotFound");
+                    return response;
+                }
+                response.userResponse = item;
+                response.activityDetail = _dapperServiec.Query<ActivityDetail>(query, new {UserId=userId});
+                response.messageResponse = new MessageResponseModel(true, ""); 
+            }
+            catch(Exception ex)
+            {
+                response.messageResponse = new MessageResponseModel(false, ex);
+            }
+            return response;
         }
 
         public async Task<Tbl_Activity> UpdateActivityAsync(
