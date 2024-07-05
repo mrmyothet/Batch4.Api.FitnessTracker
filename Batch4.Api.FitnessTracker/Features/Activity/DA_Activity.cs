@@ -131,5 +131,26 @@ namespace Batch4.Api.FitnessTracker.Features.Activity
             var result = _context.SaveChanges();
             return result;
         }
+
+        public async Task SetTotalCalorieBurn(ActivityRequestModel requestModel)
+        {
+            decimal total = 0;
+            var lst = await _context.Activities
+                        .Where(x=>x.UserId== requestModel.UserId)
+                        .AsNoTracking()
+                        .ToListAsync();
+            if (lst is null || lst.Count == 0) return;
+            foreach(var item in lst)
+            {
+                total += item.CaloriesBurned;
+            }
+            var user = await _context.tblUser
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(x => x.UserId == requestModel.UserId);
+            if (user is null) return;
+            user.TotalCaloriesBurned= total;
+            _context.Entry(user).State=EntityState.Modified;
+            int result = await _context.SaveChangesAsync();
+        }
     }
 }

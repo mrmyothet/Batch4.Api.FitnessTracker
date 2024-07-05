@@ -19,7 +19,7 @@ namespace Batch4.Api.FitnessTracker.Features.Activity
         public async Task<ActivityResponseModel> CreateActivityAsync(ActivityRequestModel activity)
         {
             ActivityResponseModel response = await _DA_Activity.CreateActivityAsync(activity);
-
+            await _DA_Activity.SetTotalCalorieBurn(activity);
             return response;
         }
 

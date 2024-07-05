@@ -14,6 +14,7 @@ namespace Batch4.Api.FitnessTracker.Services
         )
         {
             builder.Services.AddAppDbContextService(builder);
+            builder.Services.AddDapperServie(builder);
             builder.Services.AddDataAcessService();
             builder.Services.AddBusinessLogicService();
             return services;
@@ -32,6 +33,14 @@ namespace Batch4.Api.FitnessTracker.Services
                 ServiceLifetime.Transient,
                 ServiceLifetime.Transient
             );
+            return services;
+        }
+
+        public static IServiceCollection AddDapperServie(this IServiceCollection services,
+            WebApplicationBuilder builder)
+        {
+            services.AddTransient(n => new DapperService(builder.Configuration
+                                    .GetConnectionString("DbConnection")!));
             return services;
         }
 
